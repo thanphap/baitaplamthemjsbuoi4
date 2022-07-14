@@ -1,22 +1,56 @@
 /**
  * Bài 1
- * Tính lương nhân viên
+ * Tìm ngày tháng năm tiếp theo
  */
 
 /**
- * Sơ đồ 3 khối:
- * Khối 1: Dữ liệu có sẵn (Input)
- * soNgay (số ngày tính lương)
+ * Sơ đồ 3 khối: cho 3 giá trị ngày, tháng, năm
+ * Khối 1: 
+ * day1, month1, year1
  * 
  * Khối 2: Các bước xử lý code
- * B1: tạo biến soNgay, ngayLuong, luongnv
- * B2: gán giá trị cho biến lấy từ id html tương ứng
+ * B1: tạo biến:
+ * nextDay, previousDay
+ * nextMonth, previousMonth
+ * nextYear, previousYear
+ * nextTime, previousTime
+ * flag, maxDay
+ * 
+ * B2: gán giá trị cho biến lấy các giá trị từ form
  * B3: Lập công thức tính toán
- * luongnv = soNgay * ngayLuong;
- * B4: thông báo kết quả ở id tương ứng của html
+ * 1: Kiểm tra năm nhập có phải năm nhuận hay không
+ *  if (year % 4 == 0) {
+ *       if (year % 100 == 0) {
+ *           if (year % 400 == 0) {
+ *               flag = true;
+ *           } else {
+ *               flag = false;
+ *           }
+ *       }
+ *       else {
+ *           flag = true;
+ *       }
+ *   }
+ * 2: Kiểm tra tháng và gán số lượng ngày lớn nhất của tháng đó
+ * 3: tính và gán giá trị cho ngày tháng năm trước đó và tiếp theo
+ *   nextDay = day1 + 1;
+ *   previousDay = day1 - 1;
+ *   nextMonth = month1;
+ *   previousMonth = month1;
+ *   nextYear = year1;
+ *   previousYear = year1;
+ * 4: Kiểm tra ngày đầu tháng thì tính ngày và tháng trước đó
+ * 5: Kiểm tra ngày cuối tháng thì tính ngày và tháng sau đó
+ * 6: nếu tháng 1 và ngày 1 thì tính tháng và năm trước đó
+ * 7: nếu tháng 12 và ngày 31 thì tính tháng và năm sau đó
+ * 8: Nếu (0 < ngày nhập < Ngày lớn nhất) thì in ra ngày tháng năm tiếp theo và trước đó
+ *    Ngược lại thông báo ngày nhập chưa hợp lệ
+ * 
+ * 
+ * B4: hiển thị kết quả lên IU
  * 
  * Khối 3: Kết quả (Output)
- * luongnv
+ * nextTime, previousTime
  * 
  */
 
@@ -52,88 +86,52 @@ function timNgay() {
     if (month1 == 2) {
         maxDay = flag == true ? 29 : 28;
     }
-    else if(month1 == 4 || month1 == 6 || month1 == 9 || month1 == 11){
+    else if (month1 == 4 || month1 == 6 || month1 == 9 || month1 == 11) {
         maxDay = 30;
     }
-    else{
+    else {
         maxDay = 31;
     }
-        
+
+    nextDay = day1 + 1;
+    previousDay = day1 - 1;
+    nextMonth = month1;
+    previousMonth = month1;
+    nextYear = year1;
+    previousYear = year1;
+
     if (day1 == 1) {
-            nextDay = day1 + 1;
-            previousDay = 31;
-            nextMonth = month1;
-            previousMonth = month1 - 1;
-            nextYear = year1;
-            previousYear = year1;
-        }
-        else if (day1 == maxDay) {
-            nextDay = 1;
-            previousDay = day1 - 1;
-            nextMonth = month1 + 1;
-            previousMonth = month1;
-            nextYear = year1;
-            previousYear = year1;
-        }
-        else if (day1 > 1 && day1 < maxDay) {
-            nextDay = day1 + 1;
-            previousDay = day1 - 1;
-            nextMonth = month1;
-            previousMonth = month1;
-            nextYear = year1;
-            previousYear = year1;
-        }
-
-    if (month1 == 1) {
-        if (day1 == 1) {
-            previousMonth = 12;
-            previousYear = year1 - 1;
-        }
-    }
-
-    if (month1 == 2) {
-        if (flag == true) {
-            if (day1 == 29) {
-                nextDay = 1;
-                nextMonth = month1 + 1;
-            }
-        } else {
-            if (day1 == 28) {
-                nextDay = 1;
-                nextMonth = month1 + 1;
-            }
-        }
-    }
-
-    if (month1 == 4 || month1 == 6 || month1 == 9 || month1 == 11) {
-        if (day1 == 30) {
-            nextDay = 1;
-            nextMonth = month1 + 1;
-        }
-    }
-
-    if (month1 == 5 || month1 == 7 || month1 == 10 || month1 == 12) {
-        if (day1 == 1) {
+        if (month1 == 5 || month1 == 7 || month1 == 10 || month1 == 12) {
             previousDay = 30;
         }
-    }
-
-    if (month1 == 12) {
-        if (day1 == 31) {
-            nextMonth = 1;
-            nextYear = year1 + 1;
+        else {
+            previousDay = 31;
         }
+        previousMonth = month1 - 1;
+    }
+    else if (day1 == maxDay) {
+        nextDay = 1;
+        nextMonth = month1 + 1;
     }
 
-    if(day1 <= maxDay){
+    if (month1 == 1 && day1 == 1) {
+        previousMonth = 12;
+        previousYear = year1 - 1;
+    }
+
+    if (month1 == 12 && day1 == 31) {
+        nextMonth = 1;
+        nextYear = year1 + 1;
+    }
+
+    if (day1 > 0 && day1 <= maxDay) {
         nextTime = nextDay + "/" + nextMonth + "/" + nextYear;
         previousTime = previousDay + "/" + previousMonth + "/" + previousYear;
         document.getElementById("txtResult1").innerHTML = "Ngày tiếp theo: " + nextTime + "<br>Ngày trước đó: " + previousTime;
     }
-    else{
+    else {
         document.getElementById("txtResult1").innerHTML = "Vui lòng xem lại ngày nhập";
     }
-    
 }
 
 document.getElementById("btnTinh1").onclick = timNgay;

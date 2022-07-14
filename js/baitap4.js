@@ -1,23 +1,50 @@
 /**
  * Bài 4
- * Tính diện tích, chu vi hình chữ nhật
+ * Tìm sinh viên xa nhất
  */
 
 /**
  * Sơ đồ 3 khối:
- * Khối 1: Dữ liệu có sẵn (Input)
- * chieuDai, chieuRong (chiều dài, chiều rộng HCN)
+ * Khối 1: Cho tên, tọa độ nhà 3 sinh viên và trường học
+ * ten1, ten2, ten3
+ * x0, y0, x1, y1, x2, y2, x3, y3
  * 
  * Khối 2: Các bước xử lý code
- * B1: tạo biến chieuDai, chieuRong, dienTich, chuVi
- * B2: gán giá trị cho biến lấy từ id html tương ứng
+ * B1: tạo biến 
+ * ten1, ten2, ten3
+ * x0, y0, x1, y1, x2, y2, x3, y3
+ * d1, d2, d3
+ * dMax
+ * 
+ * B2: gán giá trị cho biến lấy các giá trị từ form
  * B3: Lập công thức tính toán
- * dienTich = chieuDai*chieuRong;
- * chuVi = (chieuDai+chieuRong)*2;
- * B4: thông báo kết quả ở id tương ứng của html
+ * 1: tính các khoảng cách tương ứng d1, d2, d3
+ * d1 = Math.sqrt(Math.pow((x1 - x0), 2) + Math.pow((y1 - y0), 2));
+   d2 = Math.sqrt(Math.pow((x2 - x0), 2) + Math.pow((y2 - y0), 2));
+   d3 = Math.sqrt(Math.pow((x3 - x0), 2) + Math.pow((y3 - y0), 2));
+ * 2: tìm số lớn nhất dMax
+ * dMax = d1
+ * if (dMax < d2) {
+ *    dMax = d2
+ * }
+ * if (dMax < d3) {
+ *    dMax = d3
+ * }
+ * 3: tìm tên học sinh tương ứng tenHocsinh với (d1, d2, d3) == dMax
+ * if (dMax == d1) {
+ *    tenHocsinh = ten1;
+ * }
+ * else if (dMax == d2) {
+ *    tenHocsinh = ten2;
+ * }
+ * else{
+ *    tenHocsinh = ten3;
+ * }
+ * 
+ * B4: hiển thị kết quả lên IU
  * 
  * Khối 3: Kết quả (Output)
- * dienTich, chuVi
+ * tenHocsinh
  * 
  */
 
@@ -55,10 +82,10 @@ function timHocsinh() {
     else if (dMax == d2) {
         tenHocsinh = ten2;
     }
-    else if (dMax == d3) {
+    else{
         tenHocsinh = ten3;
     }
-    document.getElementById("txtResult4").innerHTML = tenHocsinh;
+    document.getElementById("txtResult4").innerHTML = "Nhà sinh viên xa nhất: " + tenHocsinh;
 }
 
 document.getElementById("btnTinh4").onclick = timHocsinh;

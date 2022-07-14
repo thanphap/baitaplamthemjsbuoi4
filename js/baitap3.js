@@ -6,18 +6,37 @@
 
 /**
  * Sơ đồ 3 khối:
- * Khối 1: Dữ liệu có sẵn (Input)
- * soUSD (số USD cần quy đổi)
+ * Khối 1: cho số nguyên có 3 chữ số
+ * number
  * 
  * Khối 2: Các bước xử lý code
- * B1: tạo biến giaUSD, soUSD, quydoiVND
- * B2: gán giá trị cho biến lấy từ id html tương ứng
+ * B1: tạo biến 
+ * number
+ * hangTram, hangChuc, hangDonvi
+ * readNumber
+ * 
+ * B2: gán giá trị cho biến lấy các giá trị từ form
  * B3: Lập công thức tính toán
- * quydoiVND = giaUSD * soUSD;
- * B4: thông báo kết quả ở id tương ứng của html
+ * 1: tính số hàng trăm, số hàng chục, số hàng đơn vị
+ * hangTram = Math.floor(number / 100);
+ * hangChuc = Math.floor(number % 100 / 10);
+ * hangDonvi = number % 100 % 10;
+ * 2: nếu số hàng trăm > 0 => readNumber = docSo(0, hangTram) + "trăm "
+ * 3: Nếu số hàng chục = 0 => readNumber += docSo(0, hangChuc)
+ * 4: Nếu hàng chục = 1 => readNumber += "mười "
+ * 5: Nếu hàng chục > 1 => readNumber += docSo(0, hangChuc) + "mươi "
+ * 6: Nếu hàng đơn vị > 0 => readNumber += docSo(hangChuc, hangDonvi)
+ * 
+ * 
+ * B4: hiển thị kết quả lên IU
  * 
  * Khối 3: Kết quả (Output)
- * quydoiVND
+ * readNumber
+ * 
+ * 
+ * function docSo(level, num)
+ * switch(num)... case... để chuyển số thành chữ tương ứng
+ * level để chuyển cách đọc tương ứng ngữ cảnh 
  */
 
 function readNumber() {
@@ -39,7 +58,7 @@ function readNumber() {
         readNumber += docSo(0, hangChuc)
     }
     else if (hangChuc == 1) {
-        readNumber += "mười "
+        readNumber += "mười ";
     }
     else if (hangChuc > 1) {
         readNumber += docSo(0, hangChuc) + "mươi ";
@@ -54,14 +73,15 @@ function readNumber() {
 
 document.getElementById("btnTinh3").onclick = readNumber;
 
-function docSo(num1, num2) {
+
+function docSo(level, num) {
     var digit = "";
-    switch (num2) {
+    switch (num) {
         case 0:
             digit = "lẻ ";
             break;
         case 1:
-            if (num1 > 1) {
+            if (level > 1) {
                 digit = "mốt ";
             }
             else {
@@ -75,7 +95,7 @@ function docSo(num1, num2) {
             digit = "ba ";
             break;
         case 4:
-            if (num1 > 1) {
+            if (level > 1) {
                 digit = "tư ";
             }
             else {
@@ -83,7 +103,7 @@ function docSo(num1, num2) {
             }
             break;
         case 5:
-            if (num1 > 0) {
+            if (level > 0) {
                 digit = "lăm ";
             }
             else {

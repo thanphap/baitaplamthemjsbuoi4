@@ -1,23 +1,42 @@
 /**
  * Bài 2
- * Tính trung bình 5 số
+ * Tính số ngày trong tháng
  *  
 */
 
 /**
  * Sơ đồ 3 khối:
- * Khối 1: Dữ liệu có sẵn (Input)
- * number1, number2, number3, number4, number5 (các số cần tính)
+ * Khối 1: cho 2 giá trị tháng, năm
+ * month, year
  * 
  * Khối 2: Các bước xử lý code
- * B1: tạo biến number1, number2, number3, number4, number5, trungbinh
- * B2: gán giá trị cho biến lấy từ id html tương ứng
+ * B1: tạo biến 
+ * month, year, flag, day
+ * B2: gán giá trị cho biến lấy các giá trị từ form
  * B3: Lập công thức tính toán
- * trungbinh = (number1 + number2 + number3 + number4 + number5) / 5;
- * B4: thông báo kết quả ở id tương ứng của html
+ * 1: Kiểm tra năm nhập vào có phải năm nhuận không
+ *  if (year % 4 == 0) {
+ *       if (year % 100 == 0) {
+ *           if (year % 400 == 0) {
+ *               flag = true;
+ *           } else {
+ *               flag = false;
+ *           }
+ *       }
+ *       else {
+ *           flag = true;
+ *       }
+ *   }
+ * 2: Nếu tháng 2 thì xét năm nhuận và gán số ngày tương ứng
+ * day = flag == true ? 29 : 28;
+ * 3: Nếu các tháng 4, 6, 9, 11 thì gán số ngày là day = 30
+ * 4: Các tháng còn lại gán day = 31
+ * 
+ * 
+ * B4: hiển thị kết quả lên IU
  * 
  * Khối 3: Kết quả (Output)
- * trungbinh
+ * day
  * 
  */
 
@@ -40,47 +59,16 @@ function timNgay() {
         }
     }
 
-    switch (month) {
-        case 1:
-            day = 31;
-            break;
-        case 2:
-            day = flag == true ? 29 : 28;
-            break;
-        case 3:
-            day = 31;
-            break;
-        case 4:
-            day = 30;
-            break;
-        case 5:
-            day = 31;
-            break;
-        case 6:
-            day = 30;
-            break;
-        case 7:
-            day = 31;
-            break;
-        case 8:
-            day = 31;
-            break;
-        case 9:
-            day = 30;
-            break;
-        case 10:
-            day = 31;
-            break;
-        case 11:
-            day = 30;
-            break;
-        case 12:
-            day = 31;
-            break;
-        default:
-            day = 0;
-            break;
+    if (month == 2) {
+        day = flag == true ? 29 : 28;
     }
+    else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        day = 30;
+    }
+    else {
+        day = 31;
+    }
+
     document.getElementById("txtResult2").innerHTML = "Tháng " + month + "/" + year + " có: " + day + " ngày";
 }
 
